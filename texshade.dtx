@@ -2994,7 +2994,7 @@
 %    
 %    Optional color sets correspond to the functional shading modes
 %    |chemical|, |rasmol|, |hydropathy|, |structure|, |standard area|, 
-%    |accessible area| (see p.\pageref{funcdef}). The |\showsequencelogo| 
+%    |accessible area|, |DNA| (see p.\pageref{funcdef}). The |\showsequencelogo| 
 %    command can be reversed by |\hidesequencelogo|.
 %
 %    \label{Llogocolor}\label{Lclearlogocolors}
@@ -5667,7 +5667,8 @@
 %                &             & |chemical| \\
 %                &             & |rasmol| \\
 %                &             & |standard area| \\
-%                &             & |accessible area| \\ \hline
+%                &             & |accessible area| \\ 
+%                &             & |DNA| \\  \hline
 %    \end{tabular}
 %    \end{center}
 %    \medskip
@@ -8001,6 +8002,11 @@
 \codon{.}{TAA,TAG,TGA,UAA,UAG,UGA,TRR}
 }
 
+
+\definecolor{Brewer1}      {cmyk}{0.35,0.07,0,0}
+\definecolor{Brewer2}      {cmyk}{0.90,0.30,0,0}
+\definecolor{Brewer3}      {cmyk}{0.30,0,0.45,0}
+\definecolor{Brewer4}      {cmyk}{0.80,0,1,0}	
 \definecolor{GreenYellow}   {cmyk}{0.15,0,0.69,0}
 \definecolor{Yellow}        {cmyk}{0,0,1,0}
 \definecolor{Goldenrod}     {cmyk}{0,0.10,0.84,0}
@@ -9262,6 +9268,13 @@
       \fi
       \fi
    \else
+   \xdef\second@{DNA}
+   \ifx\temp@\second@
+      \funcgroup{C}{Cc}{Black}{Brewer1}{upper}{up}
+      \funcgroup{G}{Gg}{White}{Brewer2}{upper}{up}
+      \funcgroup{A}{Aa}{Black}{Brewer4}{upper}{up}
+      \funcgroup{T}{Tt}{Black}{Brewer3}{upper}{up}
+   \else
    \xdef\second@{standard area}
    \ifx\temp@\second@
       \ifgerm@n
@@ -9376,7 +9389,7 @@
       \funcgroup{Pro}{P}{Apricot}{White}{upper}{up}
    \else
    \message{<Unknown shading mode - clearing `funcgroups'>}
-   \fi\fi\fi\fi\fi\fi\fi
+   \fi\fi\fi\fi\fi\fi\fi\fi
 }
 \def\shadeallresidues{\all@fshadetrue}
 \def\get@fromstack#1;#2;#3;#4;#5@{%
@@ -12857,6 +12870,14 @@
       \logocolor{Y}{RedViolet}
       \logocolor{RW}{Black}
    \else
+   \xdef\second@{DNA}
+   \ifx\first@\second@
+      \clearlogocolors
+      \logocolor{A}{Brewer4}
+      \logocolor{C}{Brewer1}
+      \logocolor{G}{Brewer2}
+      \logocolor{T}{Brewer3}
+   \else
    \xdef\second@{accessible area}
    \ifx\first@\second@
       \clearlogocolors
@@ -12869,7 +12890,7 @@
       \logocolor{EQ}{RoyalPurple}
       \logocolor{R}{RedViolet}
       \logocolor{K}{Black}
-   \fi\fi\fi\fi\fi\fi\fi
+   \fi\fi\fi\fi\fi\fi\fi\fi
 }
 \newcommand\findsubfamily[2][n]{%
    \xdef\first@{#1}
